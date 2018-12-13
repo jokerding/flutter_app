@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TabPage1 extends StatefulWidget{
-  const TabPage1({Key key,this.data}) :super(key:key);
+class TabPage1 extends StatefulWidget {
+  const TabPage1({Key key, this.data}) : super(key: key);
   final String data;
   @override
   _MyTabbedPageState createState() => _MyTabbedPageState();
 }
 
-class _MyTabbedPageState extends State<TabPage1> with SingleTickerProviderStateMixin{
+class _MyTabbedPageState extends State<TabPage1>
+    with SingleTickerProviderStateMixin {
   final List<Tab> myTabs = <Tab>[
     new Tab(text: 'Tab1'),
     new Tab(text: 'Tab2'),
@@ -46,16 +47,16 @@ class _MyTabbedPageState extends State<TabPage1> with SingleTickerProviderStateM
         title: new TabBar(
           controller: _tabController,
           tabs: myTabs,
-          indicatorColor: Colors.white,
+          indicatorColor: Colors.yellow,
           isScrollable: true,
         ),
       ),
       body: new TabBarView(
         controller: _tabController,
         // ignore: argument_type_not_assignable
-        children: myTabs.map((Tab tab){
+        children: myTabs.map((Tab tab) {
           return new Center(child: new Text(tab.text + '    ' + widget.data));
-         }).toList(),
+        }).toList(),
       ),
     );
   }
