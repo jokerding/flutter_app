@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage>
       body: new TabBarView(
         controller: _bottomNavigation,
         children: <Widget>[
-          new TabPage1(
+          new News(
             data: '参数值',
           ),
           new TabPage2(),
