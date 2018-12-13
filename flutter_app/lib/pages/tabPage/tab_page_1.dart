@@ -113,6 +113,14 @@ class _NewsListState extends State<NewsList>{
     return await response.transform(utf8.decoder).join();
   }
 
+  Future<Null> loadData() async{
+    await get(widget.newsType);
+    if (!mounted) return;
+    setState(() {
+
+    });
+  }
+
   getData() async{
     var res = await get(widget.newsType);
     if(!mounted) return; // 异步处理，防止报错
@@ -137,13 +145,53 @@ class _NewsListState extends State<NewsList>{
 
   @override
   Widget build(BuildContext context){
-    return new ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: data == null ? 0 : data.length,
-        itemBuilder: (context, i) {
-          return _newsRow(data[i]);//把数据项塞入ListView中
-        }
+    return new RefreshIndicator(
+        child: new FutureBuilder(
+          future: get(widget.newsType),
+          builder:(BuildContext context, AsyncSnapshot snapshot){
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:        //get未执行时
+              case ConnectionState.waiting:     //get正在执行时
+                return new Center(
+                  child: new Card(
+                    child: new Text('loading...'),    //在页面中央显示正在加载
+                  ),
+                ) ;
+              default:
+                if (snapshot.hasError)    //get执行完成但出现异常
+                  return new Text('Error: ${snapshot.error}');
+                else  //get正常执行完成
+                  // 创建列表，列表数据来源于snapshot的返回值，而snapshot就是get(widget.newsType)执行完毕时的快照
+                  // get(widget.newsType)执行完毕时的快照即函数最后的返回值。
+                  return createListView(context, snapshot);
+            }
+          },
+        ),
+        onRefresh: loadData,
     );
+  }
+
+  Widget createListView(BuildContext context,AsyncSnapshot snapshot){
+    List values;
+    values = jsonDecode(snapshot.data)['result'] != null ?jsonDecode(snapshot.data)['result']['data'] : [''];
+    switch(values.length){
+      case 1:{
+        return new Center(
+          child: new Card(
+            child: new Text(jsonDecode(snapshot.data)['reason']),
+          ),
+        );
+      }
+      default:
+        return new ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(16.0),
+            itemCount: values == null ? 0 : values.length,
+            itemBuilder: (context, i) {
+              return _newsRow(values[i]);//把数据项塞入ListView中
+            }
+        );
+    }
   }
 
   // 渲染视图
