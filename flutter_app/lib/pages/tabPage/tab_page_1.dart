@@ -20,6 +20,7 @@ class News extends StatefulWidget {
   final String data;
   @override
   _MyTabbedPageState createState() => _MyTabbedPageState();
+
 }
 
 
@@ -27,15 +28,15 @@ class _MyTabbedPageState extends State<News>
     with SingleTickerProviderStateMixin {
   final List<NewsTab> myTabs = <NewsTab>[
     new NewsTab('头条', new NewsList(newsType: 'top',)),
-  new NewsTab('社会',new NewsList(newsType: 'shehui')),
-  new NewsTab('国内',new NewsList(newsType: 'guonei')),
-  new NewsTab('国际',new NewsList(newsType: 'guoji')),
-  new NewsTab('娱乐',new NewsList(newsType: 'yule')),
-  new NewsTab('体育',new NewsList(newsType: 'tiyu')),
-  new NewsTab('军事',new NewsList(newsType: 'junshi')),
-  new NewsTab('科技',new NewsList(newsType: 'keji')),
-  new NewsTab('财经',new NewsList(newsType: 'caijing')),
-  new NewsTab('时尚',new NewsList(newsType: 'shishang')),
+    new NewsTab('社会',new NewsList(newsType: 'shehui')),
+    new NewsTab('国内',new NewsList(newsType: 'guonei')),
+    new NewsTab('国际',new NewsList(newsType: 'guoji')),
+    new NewsTab('娱乐',new NewsList(newsType: 'yule')),
+    new NewsTab('体育',new NewsList(newsType: 'tiyu')),
+    new NewsTab('军事',new NewsList(newsType: 'junshi')),
+    new NewsTab('科技',new NewsList(newsType: 'keji')),
+    new NewsTab('财经',new NewsList(newsType: 'caijing')),
+    new NewsTab('时尚',new NewsList(newsType: 'shishang')),
   ];
 
   TabController _tabController;
@@ -214,8 +215,6 @@ class _NewsListState extends State<NewsList>{
               ],
             ),
           ),
-
-
         ],
       ),
     );

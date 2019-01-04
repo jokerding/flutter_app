@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
+
       appBar: new AppBar(
         backgroundColor: Colors.deepOrange,
         title: new Text('学习tabar'),
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage>
               trailing: new Icon(Icons.arrow_upward),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/a');
+                Navigator.pushNamed(context, "three");
               },
             ),
             new Divider(),
